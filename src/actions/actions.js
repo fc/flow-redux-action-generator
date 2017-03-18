@@ -1,85 +1,95 @@
-/*
 export type NumberAction = {
-    type: 'module-name/NUMBER',
+    type: 'NUMBER',
     value: number
 };
 
 export type NumberLiteralAction = {
-    type: 'module-name/NUMBER_LITERAL',
+    type: 'NUMBER_LITERAL',
     value: 123
 };
 
 export type StringAction = {
-    type: 'module-name/STRING',
+    type: 'STRING',
     value: string
 };
 
 export type StringLiteralAction = {
-    type: 'module-name/STRING_LITERAL',
+    type: 'STRING_LITERAL',
     value: 'string-literal'
 };
 
 export type BooleanAction = {
-    type: 'module-name/BOOLEAN',
+    type: 'BOOLEAN',
     value: boolean
 };
 
 export type BooleanLiteralAction = {
-    type: 'module-name/BOOLEAN_LITERAL',
+    type: 'BOOLEAN_LITERAL',
     value: true
 };
-
 export type Generic = any;
 
 export type GenericAction = {
-    type: 'module-name/GENERIC',
+    type: 'GENERIC',
     value: Generic
 };
-
 export type AnyAction = {
-    type: 'module-name/ARRAY_GENERIC',
+    type: 'ARRAY_GENERIC',
     value: any
 };
-
 export type GenericArrayAction = {
-    type: 'module-name/GENERIC_ARRAY',
+    type: 'GENERIC_ARRAY',
     value: Generic[]
 };
-
 export type ArrayObjectAction = {
-    type: 'module-name/ARRAY_OBJECT',
+    type: 'ARRAY_OBJECT',
     value: Array<{}>
 };
-
 export type ArrayGenericAction = {
-    type: 'module-name/ARRAY_GENERIC',
+    type: 'ARRAY_GENERIC',
     value: Array<Generic>
 };
-
 export type ArrayAnyAction = {
-    type: 'module-name/ARRAY_ANY',
+    type: 'ARRAY_ANY',
     value: Array<any>
 };
-
 export type ArrayNumberAction = {
-    type: 'module-name/ARRAY_NUMBER',
+    type: 'ARRAY_NUMBER',
     value: Array<number>
 };
-
 export type ArrayStringAction = {
-    type: 'module-name/ARRAY_STRING',
+    type: 'ARRAY_STRING',
     value: Array<string>
 };
 export type ArrayBooleanAction = {
-    type: 'module-name/ARRAY_BOOLEAN',
+    type: 'ARRAY_BOOLEAN',
     value: Array<boolean>
 };
-*/
 export type ArrayIntersectionAction = {
-    type: 'module-name/ARRAY_INTERSECTION',
+    type: 'ARRAY_INTERSECTION',
     value: Array<string & Object & number>
 };
 export type ArrayUnionAction = {
-    type: 'module-name/ARRAY_INTERSECTION',
+    type: 'ARRAY_UNION',
     value: Array<string | Object | number>
+};
+export type IntersectionAction = {
+    type: 'INTERSECTION',
+    value: string & Object & number
+};
+export type UnionAction = {
+    type: 'UNION',
+    value: string | Object | number
+};
+export type ObjectAction = {
+    type: 'Object',
+    value: {a: string, b: Object, c: any, d: number}
+};
+
+export type VariousAction = {
+    type: 'Various',
+    number: number,
+    string: string,
+    obj: Object,
+    value: string | Object | number
 };

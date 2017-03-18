@@ -16,9 +16,15 @@ const typeMap = {
     ObjectTypeAnnotation: 'Object',
 };
 
-function getType(action, prop) {
+function getType(prop, action) {
     let value;
-    switch(prop.value.type) {
+    let type;
+    if (typeof prop === 'string') {
+        type = prop;
+    } else {
+        type = prop.value.type;
+    }
+    switch(type) {
         case 'StringLiteralTypeAnnotation' :
             value = prop.value.raw;
             break;
@@ -31,28 +37,41 @@ function getType(action, prop) {
         case 'NumberTypeAnnotation' :
             value = 'number';
             break;
+        case 'ObjectTypeAnnotation' :
+            if (typeof prop === 'string') {
+                value = 'Object';
+            } else {
+                value = prop.value.properties
+                    .map(prop => {
+                        const value = getType(prop, action);
+                        return {
+                            key: prop.key.name,
+                            value
+                        };
+                    })
+                    .map(object => `${object.key}: ${object.value}`)
+                    .join(', ');
+                value = `{${value}}`;
+            }
+            break;
         case 'GenericTypeAnnotation' :
             value = prop.value.id.name;
             if (prop.value.id.name === 'Array') {
+                const genericType = prop.value.typeParameters.params[0].type;
                 switch (prop.value.typeParameters.params[0].type) {
                     case 'GenericTypeAnnotation' :
                         const name = prop.value.typeParameters.params[0].id.name;
                         value = `Array<${name}>`;
                         break;
-                    case 'AnyTypeAnnotation' :
-                        value = 'Array<any>';
-                        break;
                     case 'ObjectTypeAnnotation' :
-                        value = 'Array<{}>';
-                        break;
+                    case 'AnyTypeAnnotation' :
                     case 'NumberTypeAnnotation' :
-                        value = 'Array<number>';
-                        break;
+                    case 'NumberLiteralTypeAnnotation' :
                     case 'StringTypeAnnotation' :
-                        value = 'Array<string>';
-                        break;
+                    case 'StringLiteralTypeAnnotation' :
                     case 'BooleanTypeAnnotation' :
-                        value = 'Array<boolean>';
+                    case 'BooleanLiteralTypeAnnotation' :
+                        value = `Array<${getType(genericType)}>`;
                         break;
                     case 'UnionTypeAnnotation' :
                         value = buildSetType(prop.value.typeParameters.params[0].types, '|');
@@ -83,20 +102,28 @@ function getType(action, prop) {
         case 'AnyTypeAnnotation' :
             value = 'any';
             break;
-        default :
-        debugger;
-        // case 'ArrayTypeAnnotation' :
-            value = 'Array<...>';
+        case 'UnionTypeAnnotation' :
+            value = buildSetType(prop.value.types, '|');
             break;
-            // ObjectTypeAnnoation
-            // FunctionTypeAnnotation
-            // and more!
+        case 'IntersectionTypeAnnotation' :
+            value = buildSetType(prop.value.types, '&');
+            break;
+        default :
+            debugger;
+            console.log('Unknown type! ', type);
+            break;
     }
     return value;
 }
+
+function getGenericType(type) {
+    if (type.type === 'GenericTypeAnnotation')
+        return type.id.name;
+    return 'Unknown generic type argh!';
+}
 function buildSetType(types, symbol) {
     return types
-        .map(t => typeMap[t.type] ? typeMap[t.type] : console.log('Unknown type: ', t.type))
+        .map(t => typeMap[t.type] ? typeMap[t.type] : getGenericType(t))
         .join(` ${symbol} `);
 }
 
@@ -109,7 +136,7 @@ const types = result.body.map(type => {
         props: []
     };
     action.props = type.declaration.right.properties.map(prop => {
-        const value = getType(action, prop);
+        const value = getType(prop, action);
         return {
             key: prop.key.name,
             value
