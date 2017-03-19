@@ -24,7 +24,8 @@ function superCooolAction(value: string): SuperCooolAction {
 And this:
 
 ```
-export default (state: State = initialState, action: Action): State ) {
+export default (state: State = initialState, action: Action): State ) => {
+    switch (action.type) {
 		/* ... other actions generated here .. */
         case 'super-cool/AWESOME':
             return superCooolAction(state, action);

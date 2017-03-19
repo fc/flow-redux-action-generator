@@ -190,7 +190,7 @@ ${casesStr}
 }
 
 function wrapInReducer(switchCase) {
-    return `export default (state: State = initialState, action: Action): State ) {
+    return `export default (state: State = initialState, action: Action): State ) => {
 ${switchCase}
 }`;
 }
