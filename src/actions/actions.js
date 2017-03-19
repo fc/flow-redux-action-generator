@@ -95,5 +95,5 @@ export type VariousAction = {
 };
 export type SuperCooolAction = {
     type: 'super-cool/AWESOME',
-    value: 'Super value'
+    value: string
 };

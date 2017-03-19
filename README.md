@@ -6,14 +6,14 @@ Automagically transform your Flow type action:
 ```
 export type SuperCooolAction = {
     type: 'super-cool/AWESOME',
-    value: 'Super value'
+    value: string
 };
 ```
 
 Into both this:
 
 ```
-function superCooolAction(value: 'Super value'): SuperCooolAction {
+function superCooolAction(value: string): SuperCooolAction {
     return {
         type: 'super-cool/AWESOME',
         value
