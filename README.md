@@ -1,7 +1,7 @@
 
 Generate your actions and functions based on your Flow type:
 
-Transform your Flow type action:
+Automagically transform your Flow type action:
 
 ```
 export type SuperCooolAction = {
@@ -10,7 +10,7 @@ export type SuperCooolAction = {
 };
 ```
 
-Into this:
+Into both this:
 
 ```
 function superCooolAction(value: 'Super value'): SuperCooolAction {
@@ -21,7 +21,7 @@ function superCooolAction(value: 'Super value'): SuperCooolAction {
 }
 ```
 
-Add this:
+And this:
 
 ```
 export default (state: State = initialState, action: Action): State ) {
