@@ -93,3 +93,7 @@ export type VariousAction = {
     obj: Object,
     value: string | Object | number
 };
+export type SuperCooolAction = {
+    type: 'super-cool/AWESOME',
+    value: 'Super value'
+};
