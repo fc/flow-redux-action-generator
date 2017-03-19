@@ -196,22 +196,3 @@ ${switchCase}
 }
 
 console.log(wrapInReducer(wrapInSwitch(cases)));
-
-/*
-
-export default function efficiencyReport(state: State = initialState, action: Action): State {
-
-    switch (action.type) {
-        case 'efficiency-report/SET_PAGE':
-            return setPage(state, action);
-        case 'efficiency-report/SET_HAS_NEW_DATA':
-            return setHasNewData(state, action);
-        case 'efficiency-report/SET_SORT':
-            return setSort(state, action);
-        case 'efficiency-report/UPDATE_FILTERS':
-            return updateFilters(state, action);
-        default:
-            return state;
-    }
-}
-*/
